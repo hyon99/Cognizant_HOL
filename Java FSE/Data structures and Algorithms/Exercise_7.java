@@ -1,26 +1,32 @@
-import java.util.*;
-public class Exercise_7
-{
-    public static Map<Integer, Double> forecastGrowth(double initialAmount, double growthRate, int years) {
-        Map<Integer, Double> forecast = new HashMap<>();
-        double amount = initialAmount;
-        for (int i = 1; i <= years; i++) 
-        {
-            amount = amount + (amount * growthRate / 100);
-            forecast.put(i, amount);
-        }
-        return forecast;
+import java.util.Scanner;
+
+public class FinancialForecasting {
+
+    // Recursive method to calculate future value
+    public static double forecast(double amount, double rate, int years) {
+        if (years == 0)
+            return amount;
+
+        return forecast(amount * (1 + rate / 100), rate, years - 1);
     }
-    public static void main(String[] args) 
-  {
-        double initialAmount = 10000;
-        double growthRate = 8;\
-        int years = 5;
-        Map<Integer, Double> forecast = forecastGrowth(initialAmount, growthRate, years);
-        System.out.println("Financial Forecast:");
-        for (Map.Entry<Integer, Double> entry : forecast.entrySet()) 
-        {
-            System.out.printf("Year %d : %.2f%n", entry.getKey(), entry.getValue());
-        }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Initial Amount: ");
+        double amount = sc.nextDouble();
+
+        System.out.print("Enter Annual Growth Rate (%): ");
+        double rate = sc.nextDouble();
+
+        System.out.print("Enter Number of Years: ");
+        int years = sc.nextInt();
+
+        double futureValue = forecast(amount, rate, years);
+
+        System.out.printf("Future Value after %d years = %.2f\n", years, futureValue);
+
+        sc.close();
     }
 }
