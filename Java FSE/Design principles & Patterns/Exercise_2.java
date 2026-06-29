@@ -1,40 +1,64 @@
-// Implementing the Factory Method Pattern
-public class Exercise_2 
-{
-    interface Shape 
-    {
-        void area(int side1, int side2);
+interface Document {
+    void open();
+}
+
+// Concrete Document Classes
+class WordDocument implements Document {
+    public void open() {
+        System.out.println("Opening Word Document");
     }
-    static class Square implements Shape 
-    {
-        public void area(int side, int ignored) 
-        {
-            System.out.println("Area of Square = " + (side * side));
-        }
+}
+
+class PdfDocument implements Document {
+    public void open() {
+        System.out.println("Opening PDF Document");
     }
-    static class Rectangle implements Shape 
-    {
-        public void area(int length, int breadth) 
-        {
-            System.out.println("Area of Rectangle = " + (length * breadth));
-        }
+}
+
+class ExcelDocument implements Document {
+    public void open() {
+        System.out.println("Opening Excel Document");
     }
-    static class ShapeFactory 
-    {
-        public Shape getShape(String type) 
-        {
-            if (type.equalsIgnoreCase("Square"))
-                return new Square();
-            else
-                return new Rectangle();
-        }
+}
+
+// Abstract Factory
+abstract class DocumentFactory {
+    abstract Document createDocument();
+}
+
+// Concrete Factories
+class WordFactory extends DocumentFactory {
+    public Document createDocument() {
+        return new WordDocument();
     }
-    public static void main(String[] args) 
-    {
-        ShapeFactory factory = new ShapeFactory();
-        Shape s1 = factory.getShape("Square");
-        s1.area(5, 0);
-        Shape s2 = factory.getShape("Rectangle");
-        s2.area(4, 6);
+}
+
+class PdfFactory extends DocumentFactory {
+    public Document createDocument() {
+        return new PdfDocument();
+    }
+}
+
+class ExcelFactory extends DocumentFactory {
+    public Document createDocument() {
+        return new ExcelDocument();
+    }
+}
+
+// Test Class
+public class FactoryMethodPatternExample {
+    public static void main(String[] args) {
+
+        DocumentFactory wordFactory = new WordFactory();
+        DocumentFactory pdfFactory = new PdfFactory();
+        DocumentFactory excelFactory = new ExcelFactory();
+
+        Document word = wordFactory.createDocument();
+        Document pdf = pdfFactory.createDocument();
+        Document excel = excelFactory.createDocument();
+
+        word.open();
+        pdf.open();
+        excel.open();
     }
 }
